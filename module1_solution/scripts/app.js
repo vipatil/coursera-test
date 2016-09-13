@@ -1,22 +1,28 @@
 (function(){
 
   'use strict';
-  angular.module('LunchCheckApp', [])
+  angular.module('LunchCheckApp', ['angular-growl'])
+
+  .config(['growlProvider', function (growlProvider) {
+    growlProvider.globalTimeToLive(3000);
+  }])
 
   .controller('LunchCheckController', LunchCheckController);
 
-  LunchCheckController.$inject = ['$scope']
-  function LunchCheckController($scope){
+  LunchCheckController.$inject = ['$scope', 'growl']
+  function LunchCheckController($scope, growl){
 
     $scope.lunchMenu = "";
     $scope.message = "";
 
     $scope.checkMenu = function() {
 
+      var config = {};
       var menuStr = $scope.lunchMenu.trim();
 
       if (menuStr.length == 0) {
-        $scope.message = "Please enter some data";
+        //$scope.message = "Please enter some data";
+        growl.error("Please enter some data");
         return;
       }
       var tokenList = menuStr.split(",");
@@ -29,9 +35,11 @@
       }
 
       if (count <= 3) {
-          $scope.message = "Enjoy!";
+          //$scope.message = "Enjoy!";
+          growl.success("Enjoy!!");
       } else {
-        $scope.message = "Too Much!";
+          growl.warning("Too Much!");
+        //$scope.message = "Too Much!";
       }
     };
   };
