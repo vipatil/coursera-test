@@ -1,0 +1,22 @@
+
+
+<!-- <span ng-if="!list.length">Not found</span> -->
+
+<table class="table" ng-if="list.items.length">
+
+  <thead>
+
+    <th>Code</th>
+    <th>Description</th>
+    <th></th>
+
+  </thead>
+  <tbody>
+    <tr ng-repeat="item in list.items">
+
+      <th>{{item.short_name}}</th>
+      <th>{{item.description}}</th>
+      <th><button class="btn btn-primary" ng-click="list.onRemove({index: $index});" >Don't want this one!</button></th>
+    </tr>
+  </tbody>
+</table>
